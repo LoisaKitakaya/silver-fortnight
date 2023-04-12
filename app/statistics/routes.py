@@ -1,4 +1,5 @@
 from app.statistics import bp
+from flask import request
 
 
 @bp.route("/statistics/")  # type: ignore

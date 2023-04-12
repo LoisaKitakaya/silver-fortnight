@@ -1,4 +1,5 @@
 from app.trigonometry import bp
+from flask import request
 
 
 @bp.route("/trigonometry/")  # type: ignore

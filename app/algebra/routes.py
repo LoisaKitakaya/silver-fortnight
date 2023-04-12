@@ -1,4 +1,5 @@
 from app.algebra import bp
+from flask import request
 
 
 @bp.route("/algebra/")  # type: ignore

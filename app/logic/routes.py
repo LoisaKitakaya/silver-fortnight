@@ -1,4 +1,5 @@
 from app.logic import bp
+from flask import request
 
 
 @bp.route("/logic/")  # type: ignore
