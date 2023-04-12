@@ -2,6 +2,10 @@ from flask import Flask
 
 from config import Config
 
+# Flask extensions
+
+from app.extensions import ma, db, cors, migrate, login_manager
+
 # app blueprints
 
 from app.algebra import bp as algebra_bp
@@ -21,6 +25,16 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     # Flask extensions
+
+    ma.init_app(app)
+
+    db.init_app(app)
+
+    cors.init_app(app)
+
+    migrate.init_app(app, db)
+
+    login_manager.init_app(app)
 
     # app blueprints
 
