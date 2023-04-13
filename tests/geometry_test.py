@@ -1,5 +1,6 @@
 import unittest
 from app.geometry.geometry import *
+from app import create_app
 
 
 class TestGeometryCalculations(unittest.TestCase):
@@ -78,6 +79,125 @@ class TestGeometryCalculations(unittest.TestCase):
         result = sphere_volume(radius)
 
         self.assertEqual(result, 38792.35332, "result should be 38792.35332")
+
+
+class TestGeometryBlueprint(unittest.TestCase):
+    def setUp(self) -> None:
+        self.app = create_app()
+        self.app.testing = True
+        self.client = self.app.test_client()
+
+    def tearDown(self) -> None:
+        pass
+
+    def test_parent_endpoint(self):
+        response = self.client.get("/geometry/")
+
+        expected_response = "This is the geometry blueprint"
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.text, expected_response, "Not the expected response")
+
+    def test_rectangle_perimeter_endpoint(self):
+        response = self.client.post(
+            "/geometry/rectangle_perimeter/", json={"data": {"length": 30, "width": 65}}
+        )
+
+        expected_response = {"result": 190}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_circle_perimeter_endpoint(self):
+        response = self.client.post(
+            "/geometry/circle_perimeter/", json={"data": {"radius": 25}}
+        )
+
+        expected_response = {"result": 157.0795}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_triangle_perimeter_endpoint(self):
+        response = self.client.post(
+            "/geometry/triangle_perimeter/",
+            json={"data": {"side_1": 20, "side_2": 20, "side_3": 30}},
+        )
+
+        expected_response = {"result": 70}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_rectangle_area_endpoint(self):
+        response = self.client.post(
+            "/geometry/rectangle_area/", json={"data": {"length": 55, "width": 105}}
+        )
+
+        expected_response = {"result": 5775}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_circle_area_endpoint(self):
+        response = self.client.post(
+            "/geometry/circle_area/", json={"data": {"radius": 29}}
+        )
+
+        expected_response = {"result": 2642.07719}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_triangle_area_endpoint(self):
+        response = self.client.post(
+            "/geometry/triangle_area/", json={"data": {"base": 45, "height": 60}}
+        )
+
+        expected_response = {"result": 1350.0}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_sphere_area_endpoint(self):
+        response = self.client.post(
+            "/geometry/sphere_area/", json={"data": {"radius": 43}}
+        )
+
+        expected_response = {"result": 23235.19964}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_cube_volume_endpoint(self):
+        response = self.client.post(
+            "/geometry/cube_volume/", json={"data": {"side": 45}}
+        )
+
+        expected_response = {"result": 91125}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_cylinder_volume_endpoint(self):
+        response = self.client.post(
+            "/geometry/cylinder_volume/", json={"data": {"radius": 34, "height": 65}}
+        )
+
+        expected_response = {"result": 236059.0726}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_sphere_volume_endpoint(self):
+        response = self.client.post(
+            "/geometry/sphere_volume/", json={"data": {"radius": 45}}
+        )
+
+        expected_response = {"result": 381703.185}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
 
 
 if __name__ == "__main__":
