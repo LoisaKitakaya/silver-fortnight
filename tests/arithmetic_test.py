@@ -38,6 +38,13 @@ class TestArithmeticCalculations(unittest.TestCase):
 
         self.assertEqual(result, 4096, "result should be 4096")
 
+    def test_arithmetic_root(self):
+        number = 100
+
+        result = arithmetic_root(number)
+
+        self.assertEqual(result, 10, "result should be 10")
+
     def test_arithmetic_floor(self):
         data = (45, 7, 5)
 

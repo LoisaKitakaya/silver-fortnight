@@ -1,4 +1,5 @@
 from functools import reduce
+import math
 
 """
 
@@ -94,6 +95,25 @@ def arithmetic_exponent(*args):
         raise Exception(str(e))
 
     return exponential
+
+
+"""
+
+square (square root) function
+
+this function takes a type integer or float and returns the square root of the number
+
+"""
+
+
+def arithmetic_root(number):
+    try:
+        root = math.sqrt(number)
+
+    except Exception as e:
+        raise Exception(str(e))
+
+    return root
 
 
 """
