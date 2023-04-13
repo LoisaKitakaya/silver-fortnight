@@ -79,6 +79,17 @@ def get_triangle_area():
     return jsonify({"result": result})
 
 
+@bp.route("/geometry/sphere_area/", methods=["POST"])  # type: ignore
+def get_sphere_area():
+    data_dict = request.get_json()
+
+    radius = data_dict["data"]["radius"]
+
+    result = sphere_area(radius)
+
+    return jsonify({"result": result})
+
+
 @bp.route("/geometry/cube_volume/", methods=["POST"])  # type: ignore
 def get_cube_volume():
     data_dict = request.get_json()

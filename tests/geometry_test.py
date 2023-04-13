@@ -50,6 +50,13 @@ class TestGeometryCalculations(unittest.TestCase):
 
         self.assertEqual(result, 391, "result should be 391")
 
+    def test_sphere_area(self):
+        radius = 17
+
+        result = sphere_area(radius)
+
+        self.assertEqual(result, 3631.67804, "result should be 3631.67804")
+
     def test_cube_volume(self):
         side = 99
 
