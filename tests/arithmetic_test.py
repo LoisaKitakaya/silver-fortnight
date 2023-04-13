@@ -1,5 +1,6 @@
 import unittest
 from app.arithmetics.arithmetic import *
+from app import create_app
 
 
 class TestArithmeticCalculations(unittest.TestCase):
@@ -58,6 +59,92 @@ class TestArithmeticCalculations(unittest.TestCase):
         result = arithmetic_modulo(*data)
 
         self.assertEqual(result, 3, "result should be 3")
+
+
+class TestArithmeticBlueprint(unittest.TestCase):
+    def setUp(self) -> None:
+        self.app = create_app()
+        self.app.testing = True
+        self.client = self.app.test_client()
+
+    def tearDown(self) -> None:
+        pass
+
+    def test_parent_endpoint(self):
+        response = self.client.get("/arithmetic/")
+
+        expected_response = "This is the arithmetics blueprint"
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.text, expected_response, "Not the expected response")
+
+    def test_addition_endpoint(self):
+        response = self.client.post("/arithmetic/addition/", json={"data": [2, 3, 5]})
+
+        expected_response = {"result": 10}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_subtraction_endpoint(self):
+        response = self.client.post(
+            "/arithmetic/subtraction/", json={"data": [20, 3, 5]}
+        )
+
+        expected_response = {"result": 12}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_multiplication_endpoint(self):
+        response = self.client.post(
+            "/arithmetic/multiplication/", json={"data": [2, 2, 5]}
+        )
+
+        expected_response = {"result": 20}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_division_endpoint(self):
+        response = self.client.post("/arithmetic/division/", json={"data": [400, 8, 2]})
+
+        expected_response = {"result": 25}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_root_endpoint(self):
+        response = self.client.post("/arithmetic/root/", json={"data": {"number": 100}})
+
+        expected_response = {"result": 10}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_exponent_endpoint(self):
+        response = self.client.post("/arithmetic/exponent/", json={"data": [2, 2, 4]})
+
+        expected_response = {"result": 256}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_floor_endpoint(self):
+        response = self.client.post("/arithmetic/floor/", json={"data": [45, 7, 5]})
+
+        expected_response = {"result": 1}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_modulo_endpoint(self):
+        response = self.client.post("/arithmetic/modulo/", json={"data": [12, 3]})
+
+        expected_response = {"result": 0}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
 
 
 if __name__ == "__main__":
