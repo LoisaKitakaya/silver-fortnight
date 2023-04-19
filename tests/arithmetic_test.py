@@ -60,6 +60,13 @@ class TestArithmeticCalculations(unittest.TestCase):
 
         self.assertEqual(result, 3, "result should be 3")
 
+    def test_arithmetic_evaluation(self):
+        data = "100-50/5*2+5"
+
+        result = arithmetic_evaluation(expression=data)
+
+        self.assertEqual(result, 85.0, "result should be 85.0")
+
 
 class TestArithmeticBlueprint(unittest.TestCase):
     def setUp(self) -> None:
@@ -142,6 +149,16 @@ class TestArithmeticBlueprint(unittest.TestCase):
         response = self.client.post("/arithmetic/modulo/", json={"data": [12, 3]})
 
         expected_response = {"result": 0}
+
+        self.assertEqual(response.status_code, 200, "Something went wrong")
+        self.assertEqual(response.json, expected_response, "Not the expected response")
+
+    def test_expression_evaluation_endpoint(self):
+        response = self.client.post(
+            "/arithmetic/expression_eval/", json={"data": "100-50/5*2+5"}
+        )
+
+        expected_response = {"result": 85.0}
 
         self.assertEqual(response.status_code, 200, "Something went wrong")
         self.assertEqual(response.json, expected_response, "Not the expected response")

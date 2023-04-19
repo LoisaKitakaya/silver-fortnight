@@ -62,6 +62,7 @@ def root():
 
     return jsonify({"result": result})
 
+
 @bp.route("/arithmetic/exponent/", methods=["POST"])  # type: ignore
 def exponent():
     data_dict = request.get_json()
@@ -91,5 +92,16 @@ def modulo():
     data = tuple(data_dict["data"])
 
     result = arithmetic_modulo(*data)
+
+    return jsonify({"result": result})
+
+
+@bp.route("/arithmetic/expression_eval/", methods=["POST"])  # type: ignore
+def expression_eval():
+    data_dict = request.get_json()
+
+    data = data_dict["data"]
+
+    result = arithmetic_evaluation(expression=data)
 
     return jsonify({"result": result})

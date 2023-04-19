@@ -156,3 +156,21 @@ def arithmetic_modulo(*args):
         raise Exception(str(e))
 
     return modulo
+
+
+"""
+
+arithmetic evaluation function
+
+this function takes a string object and returns the result of the expression
+
+"""
+
+def arithmetic_evaluation(expression=""):
+    try:
+        result = eval(expression)
+
+    except Exception as e:
+        raise Exception(str(e))
+    
+    return result
